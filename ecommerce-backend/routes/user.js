@@ -4,7 +4,7 @@ const data = require('../logger.json')
 
 const Product = require('../models/product')
 const { writeInFile, readInFile } = require('../utils/logger')
-const { scrapLink } = require('../utils/scrapper')
+const { scrapLink, scraperToList } = require('../utils/scrapper')
 
 //middlewares
 const {authCheck} = require('../middlewares/auth')
@@ -40,19 +40,17 @@ router.get('/user/wishlist/createpaymentrequest', async(req, res) => {
     console.log(data)
     res.json({msg: data})
 })
-router.post('/user/wishlist/successcrypto', (req, res) => {
-    const {url} = req.body;
-    const gettingSomething = async(url) => {
-        try {
-            const data = await scrapLink(url)
-            console.log(data)
-            return data
-        } catch (error) {
-            console.log(error.message)
-        }
+router.post('/user/wishlist/successcrypto', async(req, res) => {
+    try {
+        const {url} = req.body;
+        const data = await scrapLink(url)
+        let dataList = data.split(' ')
+        console.log(typeof dataList)
+        dataList = JSON.stringify(dataList[0]).split(' ')
+        console.log(dataList[0].slice(14,102)) 
+        res.json({msg: 'good'})
+    } catch (error) {
+        console.log(error.message)
     }
-    gettingSomething(url)
-    // console.log(html)
-    res.json({msg: 'good'})
 })
 module.exports = router;

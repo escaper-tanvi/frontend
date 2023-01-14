@@ -12,14 +12,12 @@ const scrapLink = async(url) => {
     // })
     
         const table = await page.evaluate(() => document.querySelector('.list').innerText);
-        console.log(table)
-    
-    await page.screenshot({
-        path:'screenshot.png'
-    })
+
     browser.close();
+    return table
     // console.log(data)
     // return data
 }
+
 
 module.exports = { scrapLink }
