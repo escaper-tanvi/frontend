@@ -13,6 +13,8 @@ const {userCart, getUserCart, emptyCart, saveAddress,
     applyCouponToUserCart, createOrder, createCashOrder, orders,
     addToWishlist, wishlist, removeFromWishlist} = require('../controllers/user')
 
+    const { CreateGroup, getGroup, joinGroup } = require('../controllers/groupController')
+
 
 router.post('/user/cart', authCheck, userCart);
 router.get('/user/cart', authCheck, getUserCart);
@@ -55,4 +57,10 @@ router.post('/user/wishlist/successcrypto', (req, res) => {
     // console.log(html)
     res.json({msg: 'good'})
 })
+
+router.post("/product/:productId/Group",authCheck, CreateGroup)
+router.get("/product/:productId/Group",authCheck, getGroup)
+router.put("/product/:productId/JoinGroup",authCheck, joinGroup)
+
+
 module.exports = router;

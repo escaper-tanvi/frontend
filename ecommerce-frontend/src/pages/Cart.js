@@ -17,6 +17,19 @@ const Cart = ({history}) => {
         })
     }, [])
 
+    useEffect(() => {
+        let array = []
+        for(let i =0;i<cart.length;i++){
+            
+        array.push(cart[i]._id);
+        }
+            dispatch({
+                type: "PRODUCT",
+                payload: array,
+            })
+        
+    }, [])  
+
     const getTotal = () => {
         return cart.reduce((currentValue, nextValue) => {
             return currentValue+ nextValue.count * nextValue.price
@@ -83,6 +96,7 @@ const Cart = ({history}) => {
                     <th scope={"col"}>Qty</th>
                     <th scope={"col"}>Shipping</th>
                     <th scope={"col"}>Remove</th>
+                    <th scope={"col"}>Join Group</th>
                 </tr>
             </thead>
 

@@ -36,6 +36,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import CreateCouponPage from "./pages/admin/coupon/CreateCouponPage"
 import Payment from "./pages/Payment";
+import CreateGroupPage from './components/forms/createGroup';
 
 //USING LAZY
 
@@ -134,6 +135,7 @@ const App = () =>{
                 <AdminRoute exact path="/admin/coupon" component={CreateCouponPage}/>
                 <AdminRoute exact path="/payment" component={Payment}/>
                 <Route exact path="/checkout/Crypto" component={CheckoutCrypto}/>
+                <Route exact path="/createGroup" component={CreateGroupPage}/>
 
             </Switch>
         </Suspense>
