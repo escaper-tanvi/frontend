@@ -23,13 +23,20 @@ const Checkout = ({history}) => {
 
 
     useEffect(() => {
-        getUserCart(user.token)
-            .then((res) => {
-                //console.log("USER CART FETCHED FROM DB--->", JSON.stringify(res.data, null, 4))
-                setProducts(res.data.products)
-                setTotal(res.data.cartTotal)
-            })
+
+        user ? 
+            getUserCart(user.token)
+                .then((res) => {
+                    //console.log("USER CART FETCHED FROM DB--->", JSON.stringify(res.data, null, 4))
+                    setProducts(res.data.products)
+                    setTotal(res.data.cartTotal)
+                }).catch(error => {
+                    console.log(error.message)
+                    // history.push('/home')
+                }) :
+                    history.push('/')
     }, [])
+    
 
 
 
