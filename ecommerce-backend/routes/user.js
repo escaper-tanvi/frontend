@@ -45,11 +45,12 @@ router.get('/user/wishlist/createpaymentrequest', async(req, res) => {
 router.post('/user/wishlist/successcrypto', async(req, res) => {
     try {
         const {url} = req.body;
-        const data = await scrapLink(url)
-        let dataList = data.split(' ')
-        console.log(typeof dataList)
-        dataList = JSON.stringify(dataList[0]).split(' ')
-        console.log(dataList[0].slice(14,102)) 
+        // const data = await scrapLink(url)
+        // let dataList = data.split(' ')
+        // console.log(typeof dataList)
+        // dataList = JSON.stringify(dataList[0]).split(' ')
+        console.log(url)
+        console.log(url.slice(31,118)) 
         res.json({msg: 'good'})
     } catch (error) {
         console.log(error.message)
