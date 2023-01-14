@@ -4,12 +4,19 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { FC, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { useEffect } from 'react';
+import { response } from 'express';
+import axios from 'axios'
+
+
 
 export const SendSolForm: FC = () => {
     const [txSig, setTxSig] = useState('');
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
     const link = () => {
+        console.log(txSig)
+        urlsend(txSig)
+
         return txSig ? `https://explorer.solana.com/tx/${txSig}?cluster=devnet` : ''
     }
     const [payment, setPayment] = useState(0);
@@ -51,7 +58,31 @@ export const SendSolForm: FC = () => {
     }
     callAPI()
 },[])
+//  async function getStaticProps() {
+//     const { data } = await axios.get(txSig ? `https://explorer.solana.com/tx/${txSig}?cluster=devnet`: '')
+//     // const title = $('#ctitle').text()
+//     // const lastScraped = new Date().toISOString()
+//     console.log(data)
+//     // return {
+//     //   props: { title, lastScraped },
+//     //   revalidate: 10,
+//     // }
+//   }
+const urlsend = async (txSig) => {
+    try {
+        
+        const urlData = {url: `https://explorer.solana.com/tx/${txSig}?cluster=devnet`}
+        const res = await axios.post(`http://localhost:8000/api//user/wishlist/successcrypto`, urlData);
+        const data = await res.data;
+        console.log(urlData)
+        // console.log(data['Realtime Currency Exchange Rate']['5. Exchange Rate']);
+        // console.log()
+        // setsol(data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+    } catch (err) {
+        console.log(err);
+    }
 
+}
 
     const sendSol = event => {
         event.preventDefault()
@@ -74,6 +105,8 @@ export const SendSolForm: FC = () => {
         sendTransaction(transaction, connection).then(sig => {
             setTxSig(sig)
         })
+        // getStaticProps()
+        
     }
 
     return (
@@ -81,7 +114,7 @@ export const SendSolForm: FC = () => {
             {
                 publicKey ? 
                 <div>
-                    <p>{publicKey ? `Amount to be Paid : ${payment / sol} SOL` : ''}</p>
+                    <p>{publicKey ? `Amount to be Paid : ${payment} INR --> ${payment / sol} SOL` : ''}</p>
                     <button onClick={sendSol} type="submit" className={styles.formButton}>Send</button>
                 </div>
                     // <form onSubmit={sendSol} className={styles.form}>
@@ -99,7 +132,7 @@ export const SendSolForm: FC = () => {
                 txSig ?
                     <div>
                         <p>View your transaction on </p>
-                        <a href={link()}>Solana Explorer</a>
+                        <button onClick={link}>Solana Explorer</button>
                     </div> :
                     null
             }
